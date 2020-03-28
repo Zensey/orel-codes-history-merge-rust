@@ -4,8 +4,8 @@ use std::io::{self, BufRead, Write};
 fn process<W: Write, R: BufRead> (out: &mut W, mut rdr: R) {
     let (mut list_local, mut list_serv) = (read_vec(&mut rdr), read_vec(&mut rdr));
     let (res, diff) = merge(&mut list_serv, &mut list_local);
-    write!(out, "{}\n", vec_to_string(&res));
-    write!(out, "{}\n", vec_to_string(&diff));
+    writeln!(out, "{}", vec_to_string(&res));
+    writeln!(out, "{}", vec_to_string(&diff));
 }
 
 fn vec_to_string(v: &Vec<i32>) -> String {
@@ -131,6 +131,7 @@ mod tests {
     fn bech_merge() {
         let mut rng = rand::thread_rng();
         let history_length = 100_000_000;
+        println!("test tests::bech_merge: length = {}", history_length);
         let bench_iters = 21;
 
         let mut array: Vec<std::time::Duration> = Vec::new();
@@ -146,6 +147,6 @@ mod tests {
             array.push(now.elapsed());
         }
         array.sort();
-        println!("test tests::bech_merge: median time-> {:?}", array[bench_iters/2]);
+        println!("test tests::bech_merge: median time -> {:?}", array[bench_iters/2]);
     }
 }
